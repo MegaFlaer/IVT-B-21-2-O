@@ -1,0 +1,35 @@
+class FileManipulator
+  def initialize(filename)
+    @filename = filename
+  end
+
+  def index
+    File.readlines(@filename).each do |line|
+      puts line
+    end
+  end
+
+  def find(id)
+    lines = File.readlines(@filename)
+    line = lines[id.to_i - 1]
+    puts line if line
+  end
+
+  def where(pattern)
+    File.readlines(@filename).each do |line|
+      puts line if line.include?(pattern)
+    end
+  end
+
+  def update(id, text)
+    lines = File.readlines(@filename)
+    lines[id.to_i - 1] = text + "\n"
+    File.write(@filename, lines.join)
+  end
+
+  def delete(id)
+    lines = File.readlines(@filename)
+    lines.delete_at(id.to_i - 1)
+    File.write(@filename, lines.join)
+  end
+end

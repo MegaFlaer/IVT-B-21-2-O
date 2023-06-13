@@ -1,0 +1,41 @@
+require 'sinatra'
+
+class CashMachine
+  def initialize
+    @balance = 0
+  end
+
+  def deposit(amount)
+    @balance += amount
+    "Депозит успешно выполнен. Новый баланс: #{@balance}"
+  end
+
+  def withdraw(amount)
+    if amount > 0 && amount <= @balance
+      @balance -= amount
+      "Снятие средств выполнено успешно. Новый баланс: #{@balance}"
+    else
+      "Недостаточно средств на счете"
+    end
+  end
+
+  def check_balance
+    "Текущий баланс: #{@balance}"
+  end
+end
+
+cash_machine = CashMachine.new
+
+get '/deposit' do
+  value = params[:value].to_i
+  cash_machine.deposit(value)
+end
+
+get '/withdraw' do
+  value = params[:value].to_i
+  cash_machine.withdraw(value)
+end
+
+get '/balance' do
+  cash_machine.check_balance
+end

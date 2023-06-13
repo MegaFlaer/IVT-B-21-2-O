@@ -1,44 +1,33 @@
-def process_word(word)
-  if word.end_with?("CS")
-    result = 2 ** word.length
-    puts result
-  else
-    reversed_word = word.reverse
-    puts reversed_word
+class CashMachine
+  def initialize
+    @balance = 100.0
+  end
+
+  def deposit(amount)
+    if amount > 0
+      @balance += amount
+      puts "Внесено #{amount}. Новый баланс: #{@balance}"
+    else
+      puts "Недопустимая сумма для внесения. Сумма должна быть больше 0."
+    end
+  end
+
+  def withdraw(amount)
+    if amount > 0 && amount <= @balance
+      @balance -= amount
+      puts "Снято #{amount}. Новый баланс: #{@balance}"
+    else
+      puts "Недопустимая сумма для снятия. Сумма должна быть больше 0 и не превышать текущий баланс."
+    end
+  end
+
+  def check_balance
+    puts "Текущий баланс: #{@balance}"
   end
 end
 
-# Метод для создания массива покемонов
-def create_pokemon_array
-  puts "Сколько покемонов вы хотите добавить?"
-  count = gets.chomp.to_i
 
-  pokemon_array = []
-  count.times do
-    pokemon = {}
-    puts "Введите имя покемона:"
-    pokemon[:name] = gets.chomp
-    puts "Введите цвет покемона:"
-    pokemon[:color] = gets.chomp
-
-    pokemon_array << pokemon
-  end
-
-  pokemon_array
-end
-
-
-def print_pokemon_array(pokemon_array)
-  puts pokemon_array
-end
-
-
-def main
-  puts "Введите слово:"
-  word = gets.chomp
-
-  process_word(word)
-
-  pokemon_array = create_pokemon_array
-  print_pokemon_array(pokemon_array)
-end
+atm = CashMachine.new
+atm.deposit(50)
+atm.withdraw(25)
+atm.check_balance
